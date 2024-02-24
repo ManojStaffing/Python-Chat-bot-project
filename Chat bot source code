@@ -1,0 +1,156 @@
+import pandas as pd
+from datetime import datetime
+
+def Holiday_package(): 
+    user={}
+
+    print("Welcome to our holidays package service!") 
+    while True: 
+        looking_vacation=input("Are you looking to plan a vacation soon(Yes/No)? : ").lower()
+        if looking_vacation =="yes":
+            user["looking_vacation"]=looking_vacation
+            while True:
+                planning_month=input("Great!, May I know in which month you are planing for vaccation? : ").lower()
+                if planning_month in lower_months:
+                    user["planning_month"]=planning_month
+                    break
+                else:
+                    print("Enter proper month like 'January' or  'Jan'  ")
+            break     
+        elif looking_vacation =="No".lower():
+            user["looking_vacation"]=looking_vacation
+            print("Thanks for Visiting Us! , Let me know when you plan for vaccation.")
+            break 
+                    
+        else:
+            print("Enter Your Answer in Yes or No only")
+       
+    
+    while True:
+        if looking_vacation =="No".lower():
+            break
+        else:
+            Destination_typ=input("What type of destination are you interested in for your holiday? (e.g., Beach, Mountains, City,'hill area'): ").lower()
+            if Destination_typ in valid_destination:
+                user['Destination_typ']=Destination_typ
+                break
+            else:
+                print("Your Destination not listed, Please choose from listed one(e.g., Beach, Mountains, City,hill area)")
+    while True:
+        if looking_vacation=="No".lower():
+            break
+        else:
+            person=input("How many people will be traveling with you on this vacation?: ")
+            if person.isdigit():
+                user["person"]=person
+                break
+            else:
+                print("Please enter only in no. digit")
+    while True:
+        if looking_vacation=="No".lower():
+            break
+        else:
+            Plan_date=input("What are your preferred travel dates or timeframe for this trip? (YYYY-MM-DD): ")
+            
+            if is_valid_date(Plan_date):
+                user["Plan_date"]=Plan_date
+                break
+            else:
+                print("Invalid date, Please enter in (YYYY-MM-DD) format.")
+    
+    while True:
+        if looking_vacation=="No".lower():
+            break
+        else:
+            activity=input("Do you have any specific activities or experiences in mind for your holiday? ").lower()
+            if activity== "yes":
+                user["activity"]=activity
+                while True:
+                    activity_name=input("What kind of activities would you Like(swimming, Boating, Para gliding..)?: ").lower()
+                    if activity_name in activity_list:
+                        user["activity_name"]=activity_name
+                        break
+                    else:
+                        print("Your activity is not listed, Please choose from above list")
+                break        
+            elif activity== "no":  
+                user["activity"]=activity
+                break
+            else:
+                print("Please answer in Yes or no only: ")
+   
+    while True:
+        if looking_vacation=="No".lower():
+            break
+        else:
+            budget=input("What is your budget for this vacation package?: ")
+            if budget.isdigit():
+                user["budget"]=budget
+                break
+            else:
+                print("Please enter budget only in numbers: ")
+    
+    while True:
+        if looking_vacation=="No".lower():
+            break
+        else:
+            planned=input("Are you planned for any particular destinations or countries?: ").lower()
+            if planned=="yes":
+                user["planned"]=planned
+                destination=input("May I know which destinations or countries you planned?: ")
+                if destination.isdigit():
+                    print("Only Number can't be destination or country name, Please enter proper destinations orcountry name: ")
+                else:
+                    user["destination"]=destination
+                break
+            elif planned=="no":
+                user["planned"]=planned
+                break
+                
+            else:
+                print("Please answer in Yes or No only")
+           
+        
+    while True:
+        if looking_vacation=="No".lower():
+            break
+        else: 
+            package_type=input("Would you prefer a pre-planned package or a custom itinerary tailored to your preferences? : ")
+            user["package_type"]=package_type
+            break
+            
+    while True:
+        if looking_vacation=="No".lower():
+            break
+        else:  
+            share_ask= input("Is there anything else you'd like to share or ask about regarding your holiday plans? : ")
+            user["ask"]=share_ask
+        break
+
+    while True:
+        new_user=input("If you want to continue to enter more user then press Y if not then press N : ")
+        if new_user=="Y":
+            Holiday_package()
+            break
+        elif new_user=="N":
+            print("Thanks for Visiting Us!")
+            break
+        else:
+            print("Press only Y or N to continue: ")
+         
+        
+            valid_destination=['beach', 'mountains', 'city', 'hill area','hill']
+    activity_list=["swimming", "boating", "para gliding","para"]
+    valid_months=['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
+                  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    lower_months=[item.lower() for item in valid_months]
+    
+    def is_valid_date(date_text, date_format='%Y-%m-%d'):
+                try:
+                    datetime.strptime(date_text, date_format)
+                    return True
+                except ValueError:
+                    return False
+    return user 
+
+pd.DataFrame([Holiday_package()]) # calling function to run this chatbot 
